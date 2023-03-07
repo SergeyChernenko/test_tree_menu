@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tree menu</title>
+</head>
+<body>
+
+{% load mptt_tags %}
+<ul>
+    {% recursetree tree %}
+        <li>
+
+        <p><a onclick = "httpGet({{node.id}})">{{ node.name }}</a></p>
+            {% if not node.is_leaf_node %}
+                <ul class="children">
+                {{ children }}
+
+                </ul>
+            {% endif %}
+        </li>
+    {% endrecursetree %}
+</ul>
+
+</body>
+</html>
+
+<script>
+    function httpGet(id) {
+        var url = 'http://127.0.0.1:8000/' + id + '/'
+        window.location.href = url;
+    }
+</script>
+
+<style>
+    a{
+        text-decoration: underline;
+        cursor: pointer;
+    }
+    a:hover {
+        color: #001aff; /* Цвет текста */
+    }
+</style>
